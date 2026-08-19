@@ -19,14 +19,14 @@ Run the server (binds to `0.0.0.0:8000`, SSE endpoint at `/sse`):
 python server.py
 ```
 
-Run all tests:
+Run all tests (use `python -m pytest`, not a bare `pytest` — a global Homebrew `pytest` on `PATH` will shadow the venv's and fail with `ModuleNotFoundError: mcp.server.fastmcp`):
 ```bash
-pytest
+python -m pytest
 ```
 
 Run a single test:
 ```bash
-pytest test_server.py::test_fetch_customer_ticket_success
+python -m pytest test_server.py::test_fetch_customer_ticket_success
 ```
 
 Verify the SSE endpoint manually while the server is running:
@@ -39,7 +39,8 @@ Docker build/run:
 docker build -t simple-server-mcp .
 docker run -p 8000:8000 simple-server-mcp
 ```
-Note: the `Dockerfile`'s `RUN pip install requirements.txt` is missing the `-r` flag and is currently broken — fix to `pip install -r requirements.txt` if touching the Dockerfile.
+
+CI (`.github/workflows/test.yml`) runs `pytest` on every push/PR to `main`.
 
 ## Architecture
 
